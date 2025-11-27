@@ -7,26 +7,8 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.nio.charset.StandardCharsets;
-import java.time.format.DateTimeFormatter;
 
 public class CsvToJsonFileReader {
-
-    public static void main(String[] args) {
-        String csvPath = "tickets_" +
-                java.time.LocalDateTime.now()
-                        .format(DateTimeFormatter.ofPattern("yyyyMMdd_HHmm")) +
-                ".csv";
-        String outputJsonPath = "resultado_" +
-                java.time.LocalDateTime.now()
-                        .format(DateTimeFormatter.ofPattern("yyyyMMdd_HHmm")) +
-                ".json";
-
-        JSONArray result = parseCsvToJson(csvPath);
-
-        saveJsonToFile(result, outputJsonPath);
-
-        System.out.println("Arquivo gerado com sucesso em: " + outputJsonPath);
-    }
 
     public static JSONArray parseCsvToJson(String filePath) {
         JSONArray jsonArray = new JSONArray();
