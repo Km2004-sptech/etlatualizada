@@ -27,7 +27,7 @@ public class JiraService {
             ORDER BY created DESC
             """;
 
-    // Campos que queremos retornar
+    //Campos a serem retornados
     private static final String FIELDS = "id,key,summary,description,status,created,resolutiondate";
 
     private static String authHeader() {
@@ -40,7 +40,7 @@ public class JiraService {
     public static JSONArray buscarTodosTicketsAAC() {
         JSONArray todos = new JSONArray();
         String nextPageToken = null;
-        int maxResults = 100; // pode aumentar até 5000
+        int maxResults = 100;
 
         try {
             while (true) {
@@ -85,7 +85,6 @@ public class JiraService {
                 System.out.println("RESPOSTA → " + jsonStr);
 
                 if (status < 200 || status >= 300) {
-                    // erro — para o loop
                     break;
                 }
 
@@ -113,7 +112,6 @@ public class JiraService {
                         break;
                     }
                 } else {
-                    // sem token → acabou
                     break;
                 }
             }
