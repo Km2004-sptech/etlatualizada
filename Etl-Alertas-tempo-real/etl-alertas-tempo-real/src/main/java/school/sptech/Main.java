@@ -1,7 +1,6 @@
 package school.sptech;
 
 import org.json.JSONArray;
-
 import java.time.format.DateTimeFormatter;
 
 public class Main {
@@ -12,21 +11,24 @@ public class Main {
 
         GerarCsvTickets.gerarCsv(tickets);
 
-        String csvPath = "tickets_" +
-                java.time.LocalDateTime.now()
-                        .format(DateTimeFormatter.ofPattern("yyyyMMdd_HHmm")) +
-                ".csv";
+        String timestamp = java.time.LocalDateTime.now()
+                .format(DateTimeFormatter.ofPattern("yyyyMMdd_HHmm"));
 
-        String jsonPath = "resultado_" +
-                java.time.LocalDateTime.now()
-                        .format(DateTimeFormatter.ofPattern("yyyyMMdd_HHmm")) +
-                ".json";
+        String csvPath = "tickets_" + timestamp + ".csv";
+        String jsonPath = "resultado_" + timestamp + ".json";
 
         JSONArray json = CsvToJsonFileReader.parseCsvToJson(csvPath);
         CsvToJsonFileReader.saveJsonToFile(json, jsonPath);
 
         System.out.println("CSV gerado em: " + csvPath);
         System.out.println("JSON gerado em: " + jsonPath);
-        System.out.println("Processo concluído!");
+
+
+        String region = "us-east-1";
+
+        S3Uploader uploader = new S3Uploader(region);
+        uploader.uploadFile("", "jsons/" + timestamp + ".json", jsonPath);
+
+        System.out.println("Processo concluído com upload no S3!");
     }
 }
